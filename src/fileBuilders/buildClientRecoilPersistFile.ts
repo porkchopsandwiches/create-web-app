@@ -1,6 +1,7 @@
 import { Config } from "../types/Config";
+import { FileBuilder } from "../types/FileBuilder";
 
-export const buildClientRecoilPersistFile = async (config: Config): Promise<string> => {
+export const buildClientRecoilPersistFile: FileBuilder = async (config: Config): Promise<string> => {
     const { stateLibrary } = config;
 
     if (stateLibrary !== "recoil") {

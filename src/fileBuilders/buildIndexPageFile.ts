@@ -1,4 +1,6 @@
-export const buildIndexPageFile = async (): Promise<string> => {
+import { FileBuilder } from "../types/FileBuilder";
+
+export const buildIndexPageFile: FileBuilder = async (): Promise<string> => {
     return `
 import React, { PropsWithChildren } from "react";
 import { GetStaticProps } from "next";

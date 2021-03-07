@@ -1,6 +1,7 @@
 import prettyFormat from "pretty-format";
+import { FileBuilder } from "../types/FileBuilder";
 
-export const buildTypeScriptConfigFile = async (): Promise<string> => {
+export const buildTypeScriptConfigFile: FileBuilder = async (): Promise<string> => {
     return prettyFormat(
         {
             compilerOptions: {

@@ -1,6 +1,7 @@
 import { Config } from "../types/Config";
+import { FileBuilder } from "../types/FileBuilder";
 
-export const buildGitIgnoreFile = async (config: Config): Promise<string> => {
+export const buildGitIgnoreFile: FileBuilder = async (config: Config): Promise<string> => {
     const { functions } = config;
 
     return `

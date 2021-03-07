@@ -1,6 +1,7 @@
 import { Config } from "../types/Config";
+import { FileBuilder } from "../types/FileBuilder";
 
-export const buildESLintIgnoreFile = async (config: Config): Promise<string> => {
+export const buildESLintIgnoreFile: FileBuilder = async (config: Config): Promise<string> => {
     const { functions } = config;
 
     const ignore = [`/node_modules/*`, `/public/*`, `.next/*`, `/out/*`];

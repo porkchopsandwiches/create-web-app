@@ -1,4 +1,6 @@
-export const buildStylishFormatterFile = async (): Promise<string> => {
+import { FileBuilder } from "../types/FileBuilder";
+
+export const buildStylishFormatterFile: FileBuilder = async (): Promise<string> => {
     return `
 /* eslint-disable @typescript-eslint/no-var-requires */
 

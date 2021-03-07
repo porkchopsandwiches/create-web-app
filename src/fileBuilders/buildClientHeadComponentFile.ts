@@ -1,4 +1,6 @@
-export const buildClientHeadComponentFile = async (): Promise<string> => {
+import { FileBuilder } from "../types/FileBuilder";
+
+export const buildClientHeadComponentFile: FileBuilder = async (): Promise<string> => {
     return `
 import React, { PropsWithChildren } from "react";
 import NextHead from "next/head";

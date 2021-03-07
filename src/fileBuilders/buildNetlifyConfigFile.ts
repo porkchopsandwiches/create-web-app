@@ -1,6 +1,7 @@
 import { Config } from "../types/Config";
+import { FileBuilder } from "../types/FileBuilder";
 
-export const buildNetlifyConfigFile = async (config: Config): Promise<string> => {
+export const buildNetlifyConfigFile: FileBuilder = async (config: Config): Promise<string> => {
     const { functions, packageManager } = config;
 
     const px = packageManager === "pnpm" ? "npx pnpm" : "npx";

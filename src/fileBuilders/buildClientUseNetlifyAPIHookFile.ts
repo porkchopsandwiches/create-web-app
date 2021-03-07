@@ -1,6 +1,7 @@
 import { Config } from "../types/Config";
+import { FileBuilder } from "../types/FileBuilder";
 
-export const buildClientUseNetlifyAPIHookFile = async (config: Config): Promise<string> => {
+export const buildClientUseNetlifyAPIHookFile: FileBuilder = async (config: Config): Promise<string> => {
     const { functions } = config;
 
     if (!functions) {

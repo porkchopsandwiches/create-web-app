@@ -1,7 +1,8 @@
 import { Config } from "../types/Config";
 import prettyFormat from "pretty-format";
+import { FileBuilder } from "../types/FileBuilder";
 
-export const buildPackageJsonFile = async (config: Config): Promise<string> => {
+export const buildPackageJsonFile: FileBuilder = async (config: Config): Promise<string> => {
     const { packageManager, name, functionsPort } = config;
 
     const px = packageManager === "pnpm" ? "npx pnpm" : "npx";

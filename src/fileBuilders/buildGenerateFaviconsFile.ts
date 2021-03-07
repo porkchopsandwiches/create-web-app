@@ -1,4 +1,6 @@
-export const buildGenerateFaviconsFile = async (): Promise<string> => {
+import { FileBuilder } from "../types/FileBuilder";
+
+export const buildGenerateFaviconsFile: FileBuilder = async (): Promise<string> => {
     return `
 /* eslint-disable no-console */
 import favicons from "favicons";

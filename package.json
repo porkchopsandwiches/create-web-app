@@ -25,6 +25,7 @@
         "inquirer": "^8.0.0",
         "is-relative": "^1.0.0",
         "mkdirp": "^1.0.4",
+        "p-each-series": "^2.2.0",
         "validate-npm-package-name": "^3.0.0"
     },
     "devDependencies": {

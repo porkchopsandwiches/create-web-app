@@ -1,6 +1,7 @@
 import { Config } from "../types/Config";
+import { FileBuilder } from "../types/FileBuilder";
 
-export const buildFunctionsWebpackConfigFile = async (config: Config): Promise<string> => {
+export const buildFunctionsWebpackConfigFile: FileBuilder = async (config: Config): Promise<string> => {
     const { functions } = config;
 
     if (!functions) {

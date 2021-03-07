@@ -1,4 +1,6 @@
-export const buildNextConfigFile = async (): Promise<string> => {
+import { FileBuilder } from "../types/FileBuilder";
+
+export const buildNextConfigFile: FileBuilder = async (): Promise<string> => {
     return `
 /* eslint-disable @typescript-eslint/no-var-requires */
 const withTM = require("next-transpile-modules")([]);

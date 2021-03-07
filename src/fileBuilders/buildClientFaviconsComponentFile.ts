@@ -1,4 +1,6 @@
-export const buildClientFaviconsComponentFile = async (): Promise<string> => {
+import { FileBuilder } from "../types/FileBuilder";
+
+export const buildClientFaviconsComponentFile: FileBuilder = async (): Promise<string> => {
     return `
 import React, { PropsWithChildren } from "react";
 import Head from "next/head";

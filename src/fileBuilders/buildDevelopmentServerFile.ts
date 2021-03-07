@@ -1,6 +1,7 @@
 import { Config } from "../types/Config";
+import { FileBuilder } from "../types/FileBuilder";
 
-export const buildDevelopmentServerFile = async (config: Config): Promise<string> => {
+export const buildDevelopmentServerFile: FileBuilder = async (config: Config): Promise<string> => {
     const { functionsPort, developmentPort } = config;
     return `
 /* eslint-disable no-console */

@@ -1,5 +1,6 @@
 import fs from "fs";
 import mkdirp from "mkdirp";
+import pEachSeries from "p-each-series";
 import path from "path";
 import { buildClientFaviconsComponentFile } from "../fileBuilders/buildClientFaviconsComponentFile";
 import { buildClientHeadComponentFile } from "../fileBuilders/buildClientHeadComponentFile";
@@ -34,8 +35,11 @@ import { buildSampleNetlifyFunctionFile } from "../fileBuilders/buildSampleNetli
 import { buildStylishFormatterFile } from "../fileBuilders/buildStylishFormatterFile";
 import { buildTypeScriptConfigFile } from "../fileBuilders/buildTypeScriptConfigFile";
 import type { Config } from "../types/Config";
+import { FileBuilder } from "../types/FileBuilder";
 
-const writeAppFile = async (config: Config, fileName: string, fileContents: string | Buffer) => {
+type FilenameAndBuilder = [filename: string, builder: FileBuilder];
+
+const writeAppFile = async (config: Config, fileName: string, fileContents: string | Buffer): Promise<void> => {
     // Create sub directories as necessary
     const fileNameElements = fileName.split("/");
     if (fileNameElements.length > 1) {
@@ -48,44 +52,53 @@ const writeAppFile = async (config: Config, fileName: string, fileContents: stri
 
 export const createAppFiles = async (config: Config): Promise<void> => {
     const { functions, stateLibrary } = config;
-    await writeAppFile(config, ".editorconfig", await buildEditorConfigFile());
-    await writeAppFile(config, ".gitignore", await buildGitIgnoreFile(config));
-    await writeAppFile(config, ".gitattributes", await buildGitAttributesFile());
-    await writeAppFile(config, ".eslintignore", await buildESLintIgnoreFile(config));
-    await writeAppFile(config, ".eslintrc.js", await buildESLintConfigFile());
-    await writeAppFile(config, ".prettierignore", await buildPrettierIgnoreFile(config));
-    await writeAppFile(config, ".prettierrc", await buildPrettierConfigFile());
-    await writeAppFile(config, "tsconfig.json", await buildTypeScriptConfigFile());
-    await writeAppFile(config, "package.json", await buildPackageJsonFile(config));
-    await writeAppFile(config, "vendor/stylishSuccess.js", await buildStylishFormatterFile());
-    await writeAppFile(config, "pages/index.tsx", await buildIndexPageFile());
-    await writeAppFile(config, "common/types/Config.ts", await buildCommonConfigTypeFile());
-    await writeAppFile(config, "common/consts/config.ts", await buildCommonConfigFile());
-    await writeAppFile(config, ".env.example", await buildEnvironmentExampleFile(config));
-    await writeAppFile(config, "client/scss/index.scss", await buildIndexSCSSFile());
-    await writeAppFile(config, "client/hooks/useConfig.ts", await buildClientUseConfigHookFile());
-    await writeAppFile(config, "client/hooks/useNetlifyAPI.ts", await buildClientUseNetlifyAPIHookFile(config));
-    await writeAppFile(config, "client/components/Layout.tsx", await buildClientLayoutComponentFile(config));
-    await writeAppFile(config, "client/components/Head.tsx", await buildClientHeadComponentFile());
-    await writeAppFile(config, "client/components/Main.tsx", await buildClientMainComponentFile());
-    await writeAppFile(config, "client/images/favicons/favicon-original.png", await buildFaviconFile());
-    await writeAppFile(config, "client/components/Favicons.tsx", await buildClientFaviconsComponentFile());
-    await writeAppFile(config, "build/generate-favicons.ts", await buildGenerateFaviconsFile());
-    await writeAppFile(config, "next.config.js", await buildNextConfigFile());
 
-    // Functions-only files
+    const namesAndBuilders: FilenameAndBuilder[] = [
+        [".editorconfig", buildEditorConfigFile],
+        [".gitignore", buildGitIgnoreFile],
+        [".gitattributes", buildGitAttributesFile],
+        [".eslintignore", buildESLintIgnoreFile],
+        [".eslintrc.js", buildESLintConfigFile],
+        [".prettierignore", buildPrettierIgnoreFile],
+        [".prettierrc", buildPrettierConfigFile],
+        ["tsconfig.json", buildTypeScriptConfigFile],
+        ["package.json", buildPackageJsonFile],
+        ["vendor/stylishSuccess.js", buildStylishFormatterFile],
+        ["pages/index.tsx", buildIndexPageFile],
+        ["common/types/Config.ts", buildCommonConfigTypeFile],
+        ["common/consts/config.ts", buildCommonConfigFile],
+        [".env.example", buildEnvironmentExampleFile],
+        ["client/scss/index.scss", buildIndexSCSSFile],
+        ["client/hooks/useConfig.ts", buildClientUseConfigHookFile],
+        ["client/hooks/useNetlifyAPI.ts", buildClientUseNetlifyAPIHookFile],
+        ["client/components/Layout.tsx", buildClientLayoutComponentFile],
+        ["client/components/Head.tsx", buildClientHeadComponentFile],
+        ["client/components/Main.tsx", buildClientMainComponentFile],
+        ["client/images/favicons/favicon-original.png", buildFaviconFile],
+        ["client/components/Favicons.tsx", buildClientFaviconsComponentFile],
+        ["build/generate-favicons.ts", buildGenerateFaviconsFile],
+        ["next.config.js", buildNextConfigFile],
+    ];
+
     if (functions) {
-        await writeAppFile(config, ".nvmrc", await buildNVMRCFile());
-        await writeAppFile(config, "netlify.toml", await buildNetlifyConfigFile(config));
-        await writeAppFile(config, "fns/webpack.config.js", await buildFunctionsWebpackConfigFile(config));
-        await writeAppFile(config, "fns/src/endpoints/getAppName.ts", await buildSampleNetlifyFunctionFile(config));
-        await writeAppFile(config, "fns/src/hofs/withConfig.ts", await buildNetlifyFunctionWithConfigHofFile(config));
-        await writeAppFile(config, "server/dev.ts", await buildDevelopmentServerFile(config));
+        namesAndBuilders.push(
+            [".nvmrc", buildNVMRCFile],
+            ["netlify.toml", buildNetlifyConfigFile],
+            ["fns/webpack.config.js", buildFunctionsWebpackConfigFile],
+            ["fns/src/endpoints/getAppName.ts", buildSampleNetlifyFunctionFile],
+            ["fns/src/hofs/withConfig.ts", buildNetlifyFunctionWithConfigHofFile],
+            ["server/dev.ts", buildDevelopmentServerFile],
+        );
     }
 
-    // Recoil files
     if (stateLibrary === "recoil") {
-        await writeAppFile(config, "client/components/StateRoot.tsx", await buildClientRecoilStateRootComponentFile(config));
-        await writeAppFile(config, "client/recoil/persist/recoilPersist.ts", await buildClientRecoilPersistFile(config));
+        namesAndBuilders.push(
+            ["client/components/StateRoot.tsx", buildClientRecoilStateRootComponentFile],
+            ["client/recoil/persist/recoilPersist.ts", buildClientRecoilPersistFile],
+        );
     }
+
+    await pEachSeries(namesAndBuilders, async ([filename, builder]) => {
+        return writeAppFile(config, filename, await builder(config));
+    });
 };

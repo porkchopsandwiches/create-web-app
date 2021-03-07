@@ -20,7 +20,9 @@ export const readConfig = async (program: commander.Command): Promise<Config> =>
         if (!directoryIsSafeToUse) {
             throw new Error(`Path "${targetDir}" is not valid to use as a target directory.`);
         }
-        passedOptions.targetDir = isRelative(targetDir) ? path.normalize(`${await getCWD()}${path.sep}${targetDir}`) : path.normalize(targetDir);
+        passedOptions.targetDir = isRelative(targetDir)
+            ? path.normalize(`${await getCWD()}${path.sep}${targetDir}`)
+            : path.normalize(targetDir);
     }
 
     if (passedOptions.name === undefined) {

@@ -1,4 +1,5 @@
 import { Config } from "../types/Config";
+import { FileBuilder } from "../types/FileBuilder";
 
 type StateComponents = {
     imports: string;
@@ -24,8 +25,12 @@ const getStateComponents = (config: Config): StateComponents => {
     };
 };
 
-export const buildClientLayoutComponentFile = async (config: Config): Promise<string> => {
-    const { imports: stateImports, wrapperPrefix: stateWrapperPrefix, wrapperSuffix: stateWrapperSuffix } = getStateComponents(config);
+export const buildClientLayoutComponentFile: FileBuilder = async (config: Config): Promise<string> => {
+    const {
+        imports: stateImports,
+        wrapperPrefix: stateWrapperPrefix,
+        wrapperSuffix: stateWrapperSuffix,
+    } = getStateComponents(config);
 
     return `
 import React, { PropsWithChildren, useEffect } from "react";

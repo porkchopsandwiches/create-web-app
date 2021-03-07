@@ -1,7 +1,9 @@
-export const buildPrettierConfigFile = async (): Promise<string> => {
+import { FileBuilder } from "../types/FileBuilder";
+
+export const buildPrettierConfigFile: FileBuilder = async (): Promise<string> => {
     return `
 {
-    "printWidth": 360,
+    "printWidth": 120,
     "trailingComma": "all",
     "singleQuote": false,
     "tabWidth": 4,

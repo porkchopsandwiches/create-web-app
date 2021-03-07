@@ -1,4 +1,6 @@
-export const buildESLintConfigFile = async (): Promise<string> => {
+import { FileBuilder } from "../types/FileBuilder";
+
+export const buildESLintConfigFile: FileBuilder = async (): Promise<string> => {
     return `
 module.exports = {
     // Use the Typescript parser

@@ -1,4 +1,6 @@
-export const buildClientUseConfigHookFile = async (): Promise<string> => {
+import { FileBuilder } from "../types/FileBuilder";
+
+export const buildClientUseConfigHookFile: FileBuilder = async (): Promise<string> => {
     return `
 import { config } from "../../common/consts/config";
 

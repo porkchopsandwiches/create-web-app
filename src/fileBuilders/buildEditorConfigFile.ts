@@ -1,4 +1,6 @@
-export const buildEditorConfigFile = async (): Promise<string> => {
+import { FileBuilder } from "../types/FileBuilder";
+
+export const buildEditorConfigFile: FileBuilder = async (): Promise<string> => {
     return `
 #root = true
 

@@ -1,4 +1,6 @@
-export const buildClientMainComponentFile = async (): Promise<string> => {
+import { FileBuilder } from "../types/FileBuilder";
+
+export const buildClientMainComponentFile: FileBuilder = async (): Promise<string> => {
     return `
 import React, { PropsWithChildren, useCallback, useEffect, useState } from "react";
 import { useNetlifyAPI } from "../hooks/useNetlifyAPI";
