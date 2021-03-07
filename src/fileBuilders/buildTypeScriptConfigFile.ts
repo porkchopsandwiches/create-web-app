@@ -1,8 +1,7 @@
-import prettyFormat from "pretty-format";
 import { FileBuilder } from "../types/FileBuilder";
 
 export const buildTypeScriptConfigFile: FileBuilder = async (): Promise<string> => {
-    return prettyFormat(
+    return JSON.stringify(
         {
             compilerOptions: {
                 /* Basic Options */
@@ -23,12 +22,12 @@ export const buildTypeScriptConfigFile: FileBuilder = async (): Promise<string> 
                 noEmit: true,
                 moduleResolution: "node",
                 isolatedModules: true,
+                typeRoots: ["node_modules/@types", "vendor/@types"],
             },
             include: ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
             exclude: ["node_modules"],
         },
-        {
-            indent: 4,
-        },
+        undefined,
+        4,
     );
 };

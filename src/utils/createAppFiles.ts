@@ -2,6 +2,7 @@ import fs from "fs";
 import mkdirp from "mkdirp";
 import pEachSeries from "p-each-series";
 import path from "path";
+import { buildAxiosConcurrencyDefinitionFile } from "../fileBuilders/buildAxiosConcurrencyDefinitionFile";
 import { buildClientFaviconsComponentFile } from "../fileBuilders/buildClientFaviconsComponentFile";
 import { buildClientHeadComponentFile } from "../fileBuilders/buildClientHeadComponentFile";
 import { buildClientLayoutComponentFile } from "../fileBuilders/buildClientLayoutComponentFile";
@@ -39,6 +40,10 @@ import { FileBuilder } from "../types/FileBuilder";
 
 type FilenameAndBuilder = [filename: string, builder: FileBuilder];
 
+const isString = (v: unknown): v is string => {
+    return typeof v === "string";
+};
+
 const writeAppFile = async (config: Config, fileName: string, fileContents: string | Buffer): Promise<void> => {
     // Create sub directories as necessary
     const fileNameElements = fileName.split("/");
@@ -47,7 +52,10 @@ const writeAppFile = async (config: Config, fileName: string, fileContents: stri
     }
 
     const filePath = `${config.targetDir}${path.sep}${fileNameElements.join(path.sep)}`;
-    return fs.promises.writeFile(filePath, fileContents);
+
+    const finalisedFileContents = isString(fileContents) ? `${fileContents}\n` : fileContents;
+
+    return fs.promises.writeFile(filePath, finalisedFileContents);
 };
 
 export const createAppFiles = async (config: Config): Promise<void> => {
@@ -70,7 +78,6 @@ export const createAppFiles = async (config: Config): Promise<void> => {
         [".env.example", buildEnvironmentExampleFile],
         ["client/scss/index.scss", buildIndexSCSSFile],
         ["client/hooks/useConfig.ts", buildClientUseConfigHookFile],
-        ["client/hooks/useNetlifyAPI.ts", buildClientUseNetlifyAPIHookFile],
         ["client/components/Layout.tsx", buildClientLayoutComponentFile],
         ["client/components/Head.tsx", buildClientHeadComponentFile],
         ["client/components/Main.tsx", buildClientMainComponentFile],
@@ -78,16 +85,18 @@ export const createAppFiles = async (config: Config): Promise<void> => {
         ["client/components/Favicons.tsx", buildClientFaviconsComponentFile],
         ["build/generate-favicons.ts", buildGenerateFaviconsFile],
         ["next.config.js", buildNextConfigFile],
+        [".nvmrc", buildNVMRCFile],
     ];
 
     if (functions) {
         namesAndBuilders.push(
-            [".nvmrc", buildNVMRCFile],
+            ["client/hooks/useNetlifyAPI.ts", buildClientUseNetlifyAPIHookFile],
             ["netlify.toml", buildNetlifyConfigFile],
             ["fns/webpack.config.js", buildFunctionsWebpackConfigFile],
             ["fns/src/endpoints/getAppName.ts", buildSampleNetlifyFunctionFile],
             ["fns/src/hofs/withConfig.ts", buildNetlifyFunctionWithConfigHofFile],
             ["server/dev.ts", buildDevelopmentServerFile],
+            ["vendor/@types/axios-concurrency/index.d.ts", buildAxiosConcurrencyDefinitionFile],
         );
     }
 

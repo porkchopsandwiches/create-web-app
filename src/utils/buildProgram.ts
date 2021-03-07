@@ -47,7 +47,8 @@ export const buildProgram = (): ProgramAndParse => {
         )
         .option("--functions-port <functionsPort>", "Port to serve functions from locally", parseIntOption)
         .option("--development-port <developmentPort>", "Port to serve development server from locally", parseIntOption)
-        .option("-t, --target-dir <target>", "Directory to output to");
+        .option("-t, --target-dir <target>", "Directory to output to")
+        .option("-O --overwrite", "If set, overwrite existing files in the output.");
 
     const parse = () => {
         program.parse(process.argv);

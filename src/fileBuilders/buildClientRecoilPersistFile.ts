@@ -58,6 +58,7 @@ export const recoilPersist = (paths: string[] = [], config: RecoilPersistConfig 
 
     const persistState = (event: PersistStateEvent) => {
         const toStore: Record<string, unknown> = {};
+        // eslint-disable-next-line unicorn/no-array-for-each
         event.atomValues.forEach((value, atomName) => {
             const name = atomName.split("__")[0];
             if (paths.length === 0 || paths.includes(name)) {
@@ -80,6 +81,7 @@ export const recoilPersist = (paths: string[] = [], config: RecoilPersistConfig 
         if (state === null) {
             return;
         }
+        // eslint-disable-next-line unicorn/no-array-for-each
         Object.keys(state).forEach((key) => {
             if (paths.length === 0 || paths.includes(key)) {
                 try {

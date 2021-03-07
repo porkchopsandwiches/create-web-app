@@ -17,7 +17,11 @@ require("dotenv").config();
 const babelConfig = () => {
     const presets = [["@babel/preset-typescript", { isTSX: true, allExtensions: true }]];
 
-    const plugins = [["@babel/plugin-proposal-decorators", { legacy: true }], ["@babel/proposal-class-properties", { loose: true }], "@babel/proposal-object-rest-spread"];
+    const plugins = [
+        ["@babel/plugin-proposal-decorators", { legacy: true }],
+        ["@babel/proposal-class-properties", { loose: true }],
+        "@babel/proposal-object-rest-spread",
+    ];
 
     return {
         cacheDirectory: true,

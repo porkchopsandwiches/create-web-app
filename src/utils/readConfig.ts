@@ -15,8 +15,8 @@ export const readConfig = async (program: commander.Command): Promise<Config> =>
 
     // If we were given a target directory, check it now before we get ahead of ourselves
     if (passedOptions.targetDir !== undefined) {
-        const { targetDir } = passedOptions;
-        const directoryIsSafeToUse = await checkAppDirectoryIsSafeToUse(targetDir);
+        const { targetDir, overwrite } = passedOptions;
+        const directoryIsSafeToUse = await checkAppDirectoryIsSafeToUse(targetDir, overwrite);
         if (!directoryIsSafeToUse) {
             throw new Error(`Path "${targetDir}" is not valid to use as a target directory.`);
         }
@@ -46,10 +46,11 @@ export const readConfig = async (program: commander.Command): Promise<Config> =>
 
     // Derive a target dir from the name if none was passed
     if (passedOptions.targetDir === undefined) {
-        const appDirectory = await deriveAppDirectory(passedOptions.name);
-        const directoryIsSafeToUse = await checkAppDirectoryIsSafeToUse(appDirectory);
+        const { name, overwrite } = passedOptions;
+        const appDirectory = await deriveAppDirectory(name);
+        const directoryIsSafeToUse = await checkAppDirectoryIsSafeToUse(appDirectory, overwrite);
         if (!directoryIsSafeToUse) {
-            throw new Error(`Name "${passedOptions.name}" is not valid to use as a target directory.`);
+            throw new Error(`Name "${name}" is not valid to use as a target directory.`);
         }
         passedOptions.targetDir = appDirectory;
     }

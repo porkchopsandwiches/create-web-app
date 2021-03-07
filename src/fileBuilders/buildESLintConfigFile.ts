@@ -6,8 +6,14 @@ module.exports = {
     // Use the Typescript parser
     parser: "@typescript-eslint/parser",
 
-    // Start from the recommended rules from the @typescript-eslint/eslint-plugin
-    extends: ["plugin:unicorn/recommended", "plugin:react/recommended", "plugin:react-hooks/recommended", "plugin:@typescript-eslint/recommended", "prettier/@typescript-eslint", "plugin:prettier/recommended"],
+    // Use Unicorn, React, React Hooks, TypeScript and Prettier rules
+    extends: [
+        "plugin:unicorn/recommended",
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:prettier/recommended",
+    ],
 
     parserOptions: {
         // Allows for the parsing of modern ECMAScript features
@@ -34,7 +40,7 @@ module.exports = {
 
     overrides: [
         {
-            // enable the rule specifically for TypeScript files
+            // enable the rule specifically for TypeScript JSX files
             files: ["*.tsx"],
             rules: {
                 "@typescript-eslint/explicit-module-boundary-types": "off",

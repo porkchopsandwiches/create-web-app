@@ -36,8 +36,8 @@ const extractPayloadErrorInfo = async (error: AxiosError<ErrorPayload | string>)
     const { response } = error;
 
     if (response && response.data) {
-        const { status, statusText } = response;
-        const payload = await response.data;
+        const { status, statusText, data } = response;
+        const payload = await data;
 
         if (typeof payload === "string") {
             return [

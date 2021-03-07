@@ -33,7 +33,7 @@ export const buildClientLayoutComponentFile: FileBuilder = async (config: Config
     } = getStateComponents(config);
 
     return `
-import React, { PropsWithChildren, useEffect } from "react";
+import React, { PropsWithChildren } from "react";
 import { Head, Props as HeadProps } from "./Head";
 ${stateImports}
 import { Favicons } from "./Favicons";

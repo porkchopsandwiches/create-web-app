@@ -9,4 +9,5 @@ export type Config = {
     functionsPort: number;
     developmentPort: number;
     stateLibrary: StateLibrary;
+    overwrite: boolean;
 };

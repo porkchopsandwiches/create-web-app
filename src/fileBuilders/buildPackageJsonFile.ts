@@ -1,5 +1,4 @@
 import { Config } from "../types/Config";
-import prettyFormat from "pretty-format";
 import { FileBuilder } from "../types/FileBuilder";
 
 export const buildPackageJsonFile: FileBuilder = async (config: Config): Promise<string> => {
@@ -7,7 +6,7 @@ export const buildPackageJsonFile: FileBuilder = async (config: Config): Promise
 
     const px = packageManager === "pnpm" ? "npx pnpm" : "npx";
 
-    return prettyFormat(
+    return JSON.stringify(
         {
             name: name,
             version: "1.0.0",
@@ -57,7 +56,7 @@ export const buildPackageJsonFile: FileBuilder = async (config: Config): Promise
                 "next:build": "next build",
                 "next:export": "next export",
                 "develop:server": "ts-node server/dev.ts",
-                develop: `${px} run fns:serve && ${px} run favicons:build && ${px} run develop:server`,
+                develop: `${px} run favicons:build && ${px} run develop:server`,
                 "favicons:build": "ts-node build/generate-favicons.ts",
                 build: `${px} run favicons:build && ${px} run fns:build && ${px} run next:build && ${px} run next:export`,
                 deploy: `${px} run build`,
@@ -80,8 +79,7 @@ export const buildPackageJsonFile: FileBuilder = async (config: Config): Promise
                 typescript: "^4.2.3",
             },
         },
-        {
-            indent: 4,
-        },
+        undefined,
+        4,
     );
 };

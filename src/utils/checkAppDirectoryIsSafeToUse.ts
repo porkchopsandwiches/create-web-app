@@ -1,9 +1,18 @@
 import fs from "fs";
 
-export const checkAppDirectoryIsSafeToUse = async (appDirectory: string): Promise<boolean> => {
+export const checkAppDirectoryIsSafeToUse = async (appDirectory: string, overwrite = false): Promise<boolean> => {
     try {
         // If this throws no exception, the target exists and we cannot use it
-        await fs.promises.stat(appDirectory);
+        const stat = await fs.promises.stat(appDirectory);
+
+        if (stat.isFile()) {
+            return false;
+        }
+
+        if (stat.isDirectory() && overwrite) {
+            return true;
+        }
+
         return false;
 
         // Not found or not readable?
