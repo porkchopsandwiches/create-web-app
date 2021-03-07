@@ -18,9 +18,6 @@ export const buildGitIgnoreFile: FileBuilder = async (config: Config): Promise<s
 /out/
 ${functions ? "/fns/public/" : ""}
 
-# production
-/build
-
 # misc
 .DS_Store
 *.pem
