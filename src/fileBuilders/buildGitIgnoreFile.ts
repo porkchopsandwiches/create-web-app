@@ -1,6 +1,8 @@
 import { Config } from "../types/Config";
 
-export const buildGitIgnoreFile = async (config: Config) => {
+export const buildGitIgnoreFile = async (config: Config): Promise<string> => {
+    const { functions } = config;
+
     return `
 # dependencies
 /node_modules
@@ -13,7 +15,7 @@ export const buildGitIgnoreFile = async (config: Config) => {
 # next.js
 /.next/
 /out/
-/fns/public/
+${functions ? "/fns/public/" : ""}
 
 # production
 /build

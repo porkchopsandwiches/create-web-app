@@ -1,6 +1,4 @@
-import { Config } from "../types/Config";
-
-export const buildClientFaviconsComponentFile = async (config: Config) => {
+export const buildClientFaviconsComponentFile = async (): Promise<string> => {
     return `
 import React, { PropsWithChildren } from "react";
 import Head from "next/head";

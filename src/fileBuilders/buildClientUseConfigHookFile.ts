@@ -1,6 +1,4 @@
-import { Config } from "../types/Config";
-
-export const buildClientUseConfigHookFile = async (config: Config) => {
+export const buildClientUseConfigHookFile = async (): Promise<string> => {
     return `
 import { config } from "../../common/consts/config";
 

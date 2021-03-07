@@ -4,7 +4,7 @@ type PackageManager = "npm" | "pnpm";
 export type Config = {
     name: string;
     targetDir: string;
-    functions: Boolean;
+    functions: boolean;
     packageManager: PackageManager;
     functionsPort: number;
     developmentPort: number;

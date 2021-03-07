@@ -1,6 +1,4 @@
-import { Config } from "../types/Config";
-
-export const buildClientMainComponentFile = async (config: Config) => {
+export const buildClientMainComponentFile = async (): Promise<string> => {
     return `
 import React, { PropsWithChildren, useCallback, useEffect, useState } from "react";
 import { useNetlifyAPI } from "../hooks/useNetlifyAPI";

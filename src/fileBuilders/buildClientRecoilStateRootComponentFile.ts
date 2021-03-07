@@ -1,6 +1,12 @@
 import { Config } from "../types/Config";
 
-export const buildClientRecoilStateRootComponentFile = async (config: Config) => {
+export const buildClientRecoilStateRootComponentFile = async (config: Config): Promise<string> => {
+    const { stateLibrary } = config;
+
+    if (stateLibrary !== "recoil") {
+        throw new Error("Recoil state library is not enabled, this file should not be generated.");
+    }
+
     return `
 import React, { PropsWithChildren } from "react";
 import { RecoilRoot } from "recoil";
@@ -21,7 +27,5 @@ export const StateRoot = (props: PropsWithChildren<Props>) => {
             </RecoilRoot>
         </React.StrictMode>
     );
-};
-
-`.trim();
+};`.trim();
 };

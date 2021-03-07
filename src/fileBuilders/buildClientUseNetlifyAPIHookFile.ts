@@ -1,6 +1,12 @@
 import { Config } from "../types/Config";
 
-export const buildClientUseNetlifyAPIHookFile = async (config: Config) => {
+export const buildClientUseNetlifyAPIHookFile = async (config: Config): Promise<string> => {
+    const { functions } = config;
+
+    if (!functions) {
+        throw new Error("Functions are not enabled, this file should not be generated.");
+    }
+
     return `
 import axios, { AxiosError, AxiosInstance } from "axios";
 import { ConcurrencyManager } from "axios-concurrency";
@@ -98,6 +104,5 @@ const netlifyApi = makeAxiosNetlifyAPIImplementation();
 
 export const useNetlifyAPI = (): AxiosNetlifyAPI => {
     return netlifyApi;
-};
-`.trim();
+};`.trim();
 };

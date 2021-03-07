@@ -1,6 +1,4 @@
-import { Config } from "../types/Config";
-
-export const buildEditorConfigFile = async (config: Config) => {
+export const buildEditorConfigFile = async (): Promise<string> => {
     return `
 #root = true
 

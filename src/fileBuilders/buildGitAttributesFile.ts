@@ -1,5 +1,3 @@
-import { Config } from "../types/Config";
-
-export const buildGitAttributesFile = async (config: Config) => {
+export const buildGitAttributesFile = async (): Promise<string> => {
     return `*.png filter=lfs diff=lfs merge=lfs -text`;
 };

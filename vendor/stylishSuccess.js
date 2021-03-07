@@ -1,5 +1,3 @@
-export const buildStylishFormatterFile = async (): Promise<string> => {
-    return `
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 "use strict";
@@ -12,14 +10,11 @@ const chalk = require("chalk");
  *
  * @author Cam Morrow
  *
- * @param {array} results
- *
+ * @param {array}   results
  * @returns {string}
  */
 module.exports = (results) => {
     const styled = stylish(results);
 
     return styled.length > 0 ? styled : chalk.green.bold("✓️ No problems found.");
-};
-`.trim();
 };

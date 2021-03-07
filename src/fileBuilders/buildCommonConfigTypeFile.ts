@@ -1,6 +1,4 @@
-import { Config } from "../types/Config";
-
-export const buildCommonConfigTypeFile = async (config: Config) => {
+export const buildCommonConfigTypeFile = async (): Promise<string> => {
     return `
 export type Config = {
     appName: string;

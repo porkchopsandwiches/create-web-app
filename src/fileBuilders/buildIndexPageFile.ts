@@ -1,6 +1,4 @@
-import { Config } from "../types/Config";
-
-export const buildIndexPageFile = async (config: Config) => {
+export const buildIndexPageFile = async (): Promise<string> => {
     return `
 import React, { PropsWithChildren } from "react";
 import { GetStaticProps } from "next";
@@ -31,4 +29,4 @@ export const getStaticProps: GetStaticProps<StaticProps> = async (/* context */)
 
 export default Index;
 `.trim();
-}
+};

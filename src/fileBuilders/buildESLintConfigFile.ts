@@ -1,6 +1,4 @@
-import { Config } from "../types/Config";
-
-export const buildESLintConfigFile = async (config: Config) => {
+export const buildESLintConfigFile = async (): Promise<string> => {
     return `
 module.exports = {
     // Use the Typescript parser

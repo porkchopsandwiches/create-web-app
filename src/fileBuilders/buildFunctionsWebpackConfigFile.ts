@@ -1,6 +1,12 @@
 import { Config } from "../types/Config";
 
-export const buildFunctionsWebpackConfigFile = async (config: Config) => {
+export const buildFunctionsWebpackConfigFile = async (config: Config): Promise<string> => {
+    const { functions } = config;
+
+    if (!functions) {
+        throw new Error("Functions are not enabled, this file should not be generated.");
+    }
+
     return `
 /* eslint-disable @typescript-eslint/no-var-requires */
 const webpack = require("webpack");
@@ -47,4 +53,4 @@ module.exports = {
     },
 };
 `.trim();
-}
+};

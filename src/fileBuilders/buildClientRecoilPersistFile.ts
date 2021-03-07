@@ -1,6 +1,12 @@
 import { Config } from "../types/Config";
 
-export const buildClientRecoilPersistFile = async (config: Config) => {
+export const buildClientRecoilPersistFile = async (config: Config): Promise<string> => {
+    const { stateLibrary } = config;
+
+    if (stateLibrary !== "recoil") {
+        throw new Error("Recoil state library is not enabled, this file should not be generated.");
+    }
+
     return `
 /* eslint-disable unicorn/no-null */
 
@@ -83,6 +89,5 @@ export const recoilPersist = (paths: string[] = [], config: RecoilPersistConfig 
     };
 
     return { RecoilPersist, updateState };
+};`.trim();
 };
-    `.trim();
-}

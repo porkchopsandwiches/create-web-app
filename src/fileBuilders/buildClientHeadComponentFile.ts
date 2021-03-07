@@ -1,6 +1,4 @@
-import { Config } from "../types/Config";
-
-export const buildClientHeadComponentFile = async (config: Config) => {
+export const buildClientHeadComponentFile = async (): Promise<string> => {
     return `
 import React, { PropsWithChildren } from "react";
 import NextHead from "next/head";
@@ -104,4 +102,4 @@ export const Head = (props: PropsWithChildren<Props>) => {
     );
 };
 `.trim();
-}
+};

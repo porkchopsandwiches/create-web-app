@@ -1,6 +1,4 @@
-import { Config } from "../types/Config";
-
-export const buildGenerateFaviconsFile = async (config: Config) => {
+export const buildGenerateFaviconsFile = async (): Promise<string> => {
     return `
 /* eslint-disable no-console */
 import favicons from "favicons";

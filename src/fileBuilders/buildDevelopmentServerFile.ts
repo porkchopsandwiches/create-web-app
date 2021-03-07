@@ -1,6 +1,6 @@
 import { Config } from "../types/Config";
 
-export const buildDevServerFile = async (config: Config) => {
+export const buildDevelopmentServerFile = async (config: Config): Promise<string> => {
     const { functionsPort, developmentPort } = config;
     return `
 /* eslint-disable no-console */
@@ -51,7 +51,7 @@ const app = next({
             }),
         );
 
-        console.log(\`\${prefix} Proxied ::\${apiPort} to \${apiPath}\`);
+        console.log(\`\${prefix} Proxying ::\${apiPort} to \${apiPath}\`);
 
         // Pass other requests on to Next like normal
         server.all("*", (req, res) => handle(req, res));
@@ -65,5 +65,5 @@ const app = next({
         console.log(error);
     }
 })();
-`
+`.trim();
 };

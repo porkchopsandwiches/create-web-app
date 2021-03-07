@@ -13,7 +13,7 @@ const getStateComponents = (config: Config): StateComponents => {
         return {
             imports: `import { StateRoot } from "./StateRoot";`,
             wrapperPrefix: `<StateRoot>`,
-            wrapperSuffix: `</StateRoot>`
+            wrapperSuffix: `</StateRoot>`,
         };
     }
 
@@ -24,9 +24,7 @@ const getStateComponents = (config: Config): StateComponents => {
     };
 };
 
-export const buildClientLayoutComponentFile = async (config: Config) => {
-    const { stateLibrary } = config;
-
+export const buildClientLayoutComponentFile = async (config: Config): Promise<string> => {
     const { imports: stateImports, wrapperPrefix: stateWrapperPrefix, wrapperSuffix: stateWrapperSuffix } = getStateComponents(config);
 
     return `
@@ -48,5 +46,5 @@ export const Layout = (props: PropsWithChildren<Props>) => {
         </>
     );
 };
-`
+`.trim();
 };

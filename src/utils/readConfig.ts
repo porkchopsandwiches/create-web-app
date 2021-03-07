@@ -5,7 +5,7 @@ import commander from "commander";
 import inquirer from "inquirer";
 import path from "path";
 import { checkAppDirectoryIsSafeToUse } from "./checkAppDirectoryIsSafeToUse";
-import { deriveAppDir } from "./deriveAppDir";
+import { deriveAppDirectory } from "./deriveAppDirectory";
 import validateNpmPackageName from "validate-npm-package-name";
 import { getCWD } from "./getCWD";
 import isRelative from "is-relative";
@@ -32,7 +32,7 @@ export const readConfig = async (program: commander.Command): Promise<Config> =>
                 validate: async (candidateValue: string) => {
                     const validation = validateNpmPackageName(candidateValue);
                     if (!validation.validForNewPackages) {
-                        return `Name "${candidateValue}" is not valid to use.`
+                        return `Name "${candidateValue}" is not valid to use.`;
                     }
                     return true;
                 },
@@ -44,12 +44,12 @@ export const readConfig = async (program: commander.Command): Promise<Config> =>
 
     // Derive a target dir from the name if none was passed
     if (passedOptions.targetDir === undefined) {
-        const appDir = await deriveAppDir(passedOptions.name);
-        const directoryIsSafeToUse = await checkAppDirectoryIsSafeToUse(appDir);
+        const appDirectory = await deriveAppDirectory(passedOptions.name);
+        const directoryIsSafeToUse = await checkAppDirectoryIsSafeToUse(appDirectory);
         if (!directoryIsSafeToUse) {
             throw new Error(`Name "${passedOptions.name}" is not valid to use as a target directory.`);
         }
-        passedOptions.targetDir = appDir;
+        passedOptions.targetDir = appDirectory;
     }
 
     if (passedOptions.functions === undefined) {
