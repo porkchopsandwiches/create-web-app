@@ -6,7 +6,8 @@
     "scripts": {
         "build": "tsc",
         "lint": "eslint -f ./vendor/stylishSuccess.js --ext .js,.ts,.tsx .",
-        "lint:fix": "eslint -f ./vendor/stylishSuccess.js --ext .js,.ts,.tsx . --fix"
+        "lint:fix": "eslint -f ./vendor/stylishSuccess.js --ext .js,.ts,.tsx . --fix",
+        "execute": "ts-node ./src/index.ts"
     },
     "bin": "dist/index.js",
     "keywords": [
